@@ -12,12 +12,19 @@ Sources:
 import os
 import time
 import cv2
-import av
 import streamlit as st
 from ultralytics import YOLO
-from streamlit_webrtc import webrtc_streamer
 
 from engine import MonitorEngine
+
+# webrtc/av sirf "Camera (Browser)" mode ke liye chahiye — missing ho to
+# baqi app (video upload / rtsp) phir bhi chalta hai
+try:
+    import av
+    from streamlit_webrtc import webrtc_streamer
+    WEBRTC_OK = True
+except ImportError:
+    WEBRTC_OK = False
 
 st.set_page_config(page_title="AI Employee Monitoring", page_icon="🛡", layout="wide")
 
@@ -189,6 +196,15 @@ def show_frame(img_bgr):
 
 # ------------------------------------------------------------------ camera (browser)
 def run_camera():
+    if not WEBRTC_OK:
+        st.error(
+            "Camera mode ke liye `streamlit-webrtc` aur `av` packages install nahi hain.\n\n"
+            "GitHub par requirements.txt me ye lines honi chahiye:\n"
+            "```\nstreamlit-webrtc>=1.46\nav>=11.0\n```"
+        )
+        st.session_state.running = False
+        return
+
     holder = {"statuses": {}, "alerts": 0}
 
     def video_frame_callback(frame):
