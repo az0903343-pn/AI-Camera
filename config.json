@@ -1,0 +1,16 @@
+{
+  "model": "models/best.pt",
+  "conf": 0.3,
+  "absent_after_frames": 60,
+  "remove_after_frames": 240,
+  "zones": [
+    {
+      "name": "Desk 1",
+      "points": [[0.03, 0.50], [0.30, 0.45], [0.30, 0.95], [0.03, 0.98]]
+    },
+    {
+      "name": "Desk 2",
+      "points": [[0.52, 0.45], [0.80, 0.42], [0.80, 0.92], [0.52, 0.95]]
+    }
+  ]
+}

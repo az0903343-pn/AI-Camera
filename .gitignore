@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+runs/
+temp_video.mp4
+.DS_Store
+.streamlit/secrets.toml
